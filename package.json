@@ -1,0 +1,72 @@
+{
+  "name": "visual-foxpro-outline",
+  "displayName": "Visual Foxpro Outline",
+  "description": "Outline support for Visual Foxpro ",
+  "version": "1.0.3",
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "publisher": "nfox",
+  "author": "Marco Plaza",
+  "icon": "images/nfoxLogo.png",
+  "categories": [
+    "Visualization"
+  ],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "foxpro",
+        "aliases": [
+          "foxpro",
+          "Visual FoxPro",
+          "VFP"
+        ],
+        "extensions": [
+          ".prg",
+          ".prx",
+          ".vc2",
+          ".sc2"
+        ],
+        "configuration": "./vfpOutline-configuration.json"
+      }
+    ],
+    "documentSelector": [
+      {
+        "language": "foxpro",
+        "scheme": "file"
+      }
+    ],
+    "outline": [
+      {
+        "id": "foxproOutline",
+        "name": "FoxPro Outline",
+        "language": "foxpro",
+        "documentSelector": [
+          "foxpro"
+        ],
+        "outlineProvider": "./out/outlineProvider"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.37",
+    "@types/vscode": "^1.60.0",
+    "typescript": "^4.3.5",
+    "eslint": "^7.29.0",
+    "eslint-plugin-vscode": "^1.2.0"
+  },
+  "keywords": [
+    "outline",
+    "document view",
+    "foxpro"
+  ]
+}
