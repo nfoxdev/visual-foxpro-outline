@@ -12,6 +12,10 @@
   "categories": [
     "Visualization"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nfoxdev/visual-foxpro-outline"
+  },
   "main": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run compile",
