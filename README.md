@@ -10,6 +10,12 @@ Outline for Visual Foxpro
 
 ## Change Log
 
+1.1.0
+- local & private declarations
+- #define & #include
+- show comment lines starting with "*> "
+- return icon changed
+
 1.0.2
 - return statements w/o values shown correctly
 - added detection of abbreviated procedure & function names ( proc , func )
