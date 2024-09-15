@@ -2,7 +2,7 @@
   "name": "visual-foxpro-outline",
   "displayName": "Visual Foxpro Outline",
   "description": "Outline support for Visual Foxpro ",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "engines": {
     "vscode": "^1.92.0"
   },

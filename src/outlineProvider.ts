@@ -22,7 +22,7 @@ export class FoxProOutlineProvider implements vscode.DocumentSymbolProvider {
       switch (outlineword.toUpperCase()) {
         case "FUNCTION":
         case "FUNC":
-          kind = vscode.SymbolKind.Function;
+          kind = vscode.SymbolKind.Method;
           break;
         case "PROCEDURE":
         case "PROC":
@@ -74,16 +74,17 @@ export class FoxProOutlineProvider implements vscode.DocumentSymbolProvider {
           kind === vscode.SymbolKind.Function
         ) {
           currentProcSymbol = symbol;
-        }
-        if (currentClassSymbol !== null && kind !== vscode.SymbolKind.Variable) {
-          currentClassSymbol.children.push(symbol);
-        } else if (
-          currentProcSymbol !== null &&
-          kind === vscode.SymbolKind.Variable
-        ) {
-          currentProcSymbol.children.push(symbol);
+          if (currentClassSymbol !== null) {
+            currentClassSymbol.children.push(symbol);
+          } else {
+            symbols.push(symbol)
+          }
         } else {
-          symbols.push(symbol);
+          if (currentProcSymbol !== null) {
+            currentProcSymbol.children.push(symbol);
+          } else {
+            symbols.push(symbol);
+          }
         }
       }
     }

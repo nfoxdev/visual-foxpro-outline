@@ -10,6 +10,9 @@ Outline for Visual Foxpro
 
 ## Change Log
 
+1.1.1 
+- Bug fix: return value, declarations and comment tags  now correctly shown as child nodes of procedures/functions
+ 
 1.1.0
 - local & private declarations
 - #define & #include
