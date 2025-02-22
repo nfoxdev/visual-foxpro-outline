@@ -9,7 +9,10 @@ Outline for Visual Foxpro
 - Return Values
 
 ## Change Log
-
+1.2.0
+- show Public / Protected / Hidden definitions
+- properties icon 
+- show variables value set 
 1.1.1 
 - Bug fix: return value, declarations and comment tags  now correctly shown as child nodes of procedures/functions
  
