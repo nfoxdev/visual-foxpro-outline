@@ -2,7 +2,7 @@
   "name": "visual-foxpro-outline",
   "displayName": "Visual Foxpro Outline",
   "description": "Outline support for Visual Foxpro ",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -38,7 +38,8 @@
           ".prg",
           ".prx",
           ".vc2",
-          ".sc2"
+          ".sc2",
+          ".fr2"
         ],
         "configuration": "./vfpOutline-configuration.json"
       }

@@ -7,7 +7,7 @@ export class FoxProOutlineProvider implements vscode.DocumentSymbolProvider {
   ): vscode.DocumentSymbol[] {
     const symbols: vscode.DocumentSymbol[] = [];
 
-    const regex = /^\s*((LOCAL|PRIVATE|PUBLIC|\*>|#DEFINE|#INCLUDE|(PROTECTED|HIDDEN)\s+(PROCEDURE|FUNCTION)|PROCEDURE|FUNCTION|DEFINE CLASS|RETURN|PROTECTED|HIDDEN)\s+([^\r\n]+)|(RETURN)|(\w+)\s*=)/gim;
+    const regex = /^\s*((LOCAL|PRIVATE|PUBLIC|\*>|#DEFINE|#INCLUDE|(PROTECTED|HIDDEN)\s+(PROCEDURE|FUNCTION)|PROCEDURE|FUNCTION|DEFINE CLASS|RETURN|PROTECTED|HIDDEN)\s+([^\r\n]+)|(RETURN)\b|(\w+)\s*=)/gim;
 
     let match: RegExpExecArray | null;
     let currentClassSymbol: vscode.DocumentSymbol | null = null;

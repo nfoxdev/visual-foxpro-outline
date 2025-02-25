@@ -1,7 +1,7 @@
 
 # Visual Foxpro Outline
 
-Outline for Visual Foxpro 
+Outline View for Visual Foxpro 
 
 ## Features
 
@@ -9,10 +9,14 @@ Outline for Visual Foxpro
 - Return Values
 
 ## Change Log
-1.2.0
+1.2.2
+- fixed bug when code contains variable names starting with "return"
+  
+1.2.1
 - show Public / Protected / Hidden definitions
-- properties icon 
-- show variables value set 
+- show class properties 
+- show variable value assignment in methods
+  
 1.1.1 
 - Bug fix: return value, declarations and comment tags  now correctly shown as child nodes of procedures/functions
  

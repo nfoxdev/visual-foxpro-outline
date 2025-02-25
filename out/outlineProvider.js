@@ -5,7 +5,7 @@ const vscode = require("vscode");
 class FoxProOutlineProvider {
     provideDocumentSymbols(document) {
         const symbols = [];
-        const regex = /^\s*((LOCAL|PRIVATE|PUBLIC|\*>|#DEFINE|#INCLUDE|(PROTECTED|HIDDEN)\s+(PROCEDURE|FUNCTION)|PROCEDURE|FUNCTION|DEFINE CLASS|RETURN|PROTECTED|HIDDEN)\s+([^\r\n]+)|(RETURN)|(\w+)\s*=)/gim;
+        const regex = /^\s*((LOCAL|PRIVATE|PUBLIC|\*>|#DEFINE|#INCLUDE|(PROTECTED|HIDDEN)\s+(PROCEDURE|FUNCTION)|PROCEDURE|FUNCTION|DEFINE CLASS|RETURN|PROTECTED|HIDDEN)\s+([^\r\n]+)|(RETURN)\b|(\w+)\s*=)/gim;
         let match;
         let currentClassSymbol = null;
         let currentProcSymbol = null;
