@@ -5,37 +5,41 @@ const vscode = require("vscode");
 class FoxProOutlineProvider {
     provideDocumentSymbols(document) {
         const symbols = [];
-        const regex = /^\s*((LOCAL|PRIVATE|PUBLIC|\*>|#DEFINE|#INCLUDE|(PROTECTED|HIDDEN)\s+(PROCEDURE|FUNCTION)|PROCEDURE|FUNCTION|DEFINE CLASS|RETURN|PROTECTED|HIDDEN)\s+([^\r\n]+)|(RETURN)\b|(\w+)\s*=)/gim;
+        const regex = /^\s*((DIMENSION|LOCAL|PRIVATE|PUBLIC|\*>|#DEFINE|#INCLUDE|(PROTECTED|HIDDEN)\s+(PROCEDURE|FUNCTION)|PROCEDURE|FUNCTION|DEFINE CLASS|ADD OBJECT|RETURN|PROTECTED|HIDDEN)\s+([^\r\n]+)|(RETURN)\b|(\w+)\s*(=))/gim;
         let match;
         let currentClassSymbol = null;
         let currentProcSymbol = null;
+        let currentObjectSymbol = null;
         let kind;
-        let outlineword = "???";
-        let funcdef = "???";
+        let tagMatch = '';
+        let outlineKind = "???";
+        let outlineName = "???";
         while ((match = regex.exec(document.getText())) !== null) {
-            outlineword = match[2] || match[4] || "VAR";
-            outlineword = outlineword.toUpperCase().replace(/\s+/, ' ');
-            funcdef = match[5];
-            switch (outlineword) {
+            tagMatch = (match[8] || match[2] || match[3] || match[4]).toUpperCase().replace(/\s+/, ' ');
+            outlineName = match[5];
+            outlineKind = '';
+            switch (tagMatch) {
+                case "ADD OBJECT":
+                    outlineKind = 'object';
+                    outlineName = outlineName.match(/(.*?)(?:WITH .*)?$/)[1];
+                    kind = vscode.SymbolKind.Object;
+                    break;
                 case "HIDDEN FUNCTION":
                 case "HIDDEN PROCEDURE":
-                    outlineword = 'hidden';
+                    outlineKind = 'hidden';
                     kind = vscode.SymbolKind.Method;
                     break;
                 case "PROTECTED FUNCTION":
                 case "PROTECTED PROCEDURE":
-                    outlineword = 'protected';
+                    outlineKind = 'protected';
                     kind = vscode.SymbolKind.Method;
                     break;
                 case "FUNCTION":
                 case "PROCEDURE":
                     kind = vscode.SymbolKind.Method;
-                    outlineword = '';
                     break;
                 case "DEFINE CLASS":
                     kind = vscode.SymbolKind.Class;
-                    funcdef = match[5];
-                    outlineword = '';
                     break;
                 case "RETURN":
                     kind = vscode.SymbolKind.Event;
@@ -48,43 +52,46 @@ class FoxProOutlineProvider {
                     break;
                 case "*>":
                     kind = vscode.SymbolKind.String;
-                    outlineword = '';
+                    outlineKind = '';
                     break;
                 case "LOCAL":
                 case "PRIVATE":
                 case "PROTECTED":
                 case "HIDDEN":
                 case "PUBLIC":
-                case "VAR":
+                case "=":
                     kind = currentClassSymbol && !currentProcSymbol ? vscode.SymbolKind.Property : vscode.SymbolKind.Variable;
-                    outlineword = match[2] || "";
-                    funcdef = match[3] || match[5] || match[7];
+                    outlineKind = match[2] || ""; // local private protected..
+                    outlineName = match[3] || match[5] || match[7];
                     break;
-                default:
-                    kind = vscode.SymbolKind.Function;
             }
-            let startpos = match.index + match[0].split('\n').length;
-            let symbolRange = new vscode.Range(document.positionAt(startpos), document.positionAt(startpos + match[0].length));
-            const symbol = new vscode.DocumentSymbol(funcdef, outlineword, kind, symbolRange, symbolRange);
+            let startpos = match.index + match[0].split('\n').length + match[0].split('\r').length;
+            let lineno = document.positionAt(startpos).line;
+            let symbolRange = new vscode.Range(lineno, 1, lineno, startpos + match[0].length);
+            const symbol = new vscode.DocumentSymbol(outlineName, outlineKind, kind, symbolRange, symbolRange);
             if (kind === vscode.SymbolKind.Class) {
                 currentClassSymbol = symbol;
-                symbols.push(symbol);
                 currentProcSymbol = null;
+                currentObjectSymbol = null;
+            }
+            else if (kind === vscode.SymbolKind.Method) {
+                currentProcSymbol = symbol;
+                currentObjectSymbol = null;
+            }
+            else if (kind === vscode.SymbolKind.Object) {
+                currentObjectSymbol = symbol;
+            }
+            if (currentObjectSymbol && kind !== vscode.SymbolKind.Object) {
+                currentObjectSymbol.children.push(symbol);
+            }
+            else if (currentProcSymbol && kind !== vscode.SymbolKind.Method) {
+                currentProcSymbol.children.push(symbol);
+            }
+            else if (currentClassSymbol && kind !== vscode.SymbolKind.Class) {
+                currentClassSymbol.children.push(symbol);
             }
             else {
-                if (currentProcSymbol && kind !== vscode.SymbolKind.Method) {
-                    currentProcSymbol.children.push(symbol);
-                }
-                else if (currentClassSymbol) {
-                    currentClassSymbol.children.push(symbol);
-                }
-                else {
-                    symbols.push(symbol);
-                }
-            }
-            if (kind === vscode.SymbolKind.Method ||
-                kind === vscode.SymbolKind.Function) {
-                currentProcSymbol = symbol;
+                symbols.push(symbol);
             }
         }
         return symbols;
