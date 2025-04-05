@@ -3,6 +3,8 @@
 
 Outline view extension for Visual Studio Code 
 
+[ download: Visual Studio Marketplace ](https://marketplace.visualstudio.com/items?itemName=nfox.visual-foxpro-outline)
+
 ## Features
 
 - Class & Object definitions
