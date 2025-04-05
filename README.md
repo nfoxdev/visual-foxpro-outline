@@ -1,7 +1,7 @@
 
 # Visual Foxpro Outline
 
-Outline View for Visual Foxpro 
+Outline view extension for Visual Studio Code 
 
 ## Features
 
