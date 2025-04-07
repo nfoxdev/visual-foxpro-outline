@@ -40,3 +40,5 @@ Outline View for Visual Foxpro
 - added detection of abbreviated procedure & function names ( proc , func )
 - source code available on github
   
+2025, Marco Plaza  
+[GitHub/nfoxdev](https://github.com/nfoxdev)
