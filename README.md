@@ -3,7 +3,7 @@
 
 Outline view extension for Visual Studio Code  
 
-Please make a donation to fuel the development of new FoxPro extensions for VS Code!
+*Please make a donation! FoxPro extensions need community support to improve!*
 
 [![Donate](https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png)](https://www.paypal.com/ncp/payment/BZ54XRMSN3J3W)
 
@@ -14,11 +14,14 @@ Please make a donation to fuel the development of new FoxPro extensions for VS C
 - Procedure & Function definitions with parameters
 - Return Values
 
-
 ![outline](image1.png)
 
 ## Change Log
 
+1.3.12
+
+- updated readme.md
+  
 1.3.11
 
 - updated package.json
