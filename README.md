@@ -5,7 +5,7 @@ Outline view extension for Visual Studio Code
 
 Please make a donation to fuel the development of new FoxPro extensions for VS Code!
 
-![Donate using PayPal](https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png)
+[![Donate](https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png)](https://www.paypal.com/ncp/payment/BZ54XRMSN3J3W)
 
 ## Features
 
