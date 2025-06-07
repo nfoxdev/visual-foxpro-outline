@@ -5,7 +5,8 @@ const vscode = require("vscode");
 class FoxProOutlineProvider {
     provideDocumentSymbols(document) {
         const symbols = [];
-        const regex = /^\s*((DIMENSION|LOCAL|PRIVATE|PUBLIC|\*>|#DEFINE|#INCLUDE|(PROTECTED|HIDDEN)\s+(PROCEDURE|FUNCTION)|PROCEDURE|FUNCTION|DEFINE CLASS|ADD OBJECT|RETURN|PROTECTED|HIDDEN)\s+([^\r\n]+)|(RETURN|ENDDEFINE)\b|(\w+)\s*(=))/gim;
+        const regexText = "^[ \\t]*((\\w+)[ \\t]*(=)|(PROTECTED +PROCEDURE|HIDDEN +PROCEDURE|DIMENSION|LOCAL|PRIVATE|PUBLIC|#DEFINE|#INCLUDE|PROTECTED|HIDDEN|PROCEDURE|FUNCTION|DEFINE CLASS|ENDDEFINE|ADD OBJECT|RETURN)[ \\t]+([^\\r\\n]+)|(RETURN))";
+        const regex = new RegExp(regexText, "gim");
         let match;
         let currentClassSymbol = null;
         let currentProcSymbol = null;
@@ -16,9 +17,9 @@ class FoxProOutlineProvider {
         let outlineName = "???";
         const doctext = document.getText();
         while ((match = regex.exec(doctext)) !== null) {
-            tagMatch = (match[6] || match[8] || match[2] || match[3] || match[4]);
+            tagMatch = match[3] || match[4] || match[6];
             tagMatch = tagMatch.toUpperCase().replace(/\s+/, ' ');
-            outlineName = match[5];
+            outlineName = match[2] || match[5] || ".T.";
             outlineKind = '';
             switch (tagMatch) {
                 case "DEFINE CLASS":
@@ -50,16 +51,13 @@ class FoxProOutlineProvider {
                     break;
                 case "RETURN":
                     kind = vscode.SymbolKind.Event;
+                    outlineKind = '';
                     break;
                 case "#DEFINE":
                     kind = vscode.SymbolKind.Constant;
                     break;
                 case "#INCLUDE":
                     kind = vscode.SymbolKind.File;
-                    break;
-                case "*>":
-                    kind = vscode.SymbolKind.String;
-                    outlineKind = '';
                     break;
                 case "LOCAL":
                 case "PRIVATE":
@@ -69,14 +67,12 @@ class FoxProOutlineProvider {
                 case "DIMENSION":
                 case "=":
                     kind = currentClassSymbol && !currentProcSymbol ? vscode.SymbolKind.Property : vscode.SymbolKind.Variable;
-                    outlineKind = match[2] || ""; // local private protected..
-                    outlineName = match[3] || match[5] || match[7];
+                    outlineKind = tagMatch;
                     break;
                 default:
                     continue; /* should not happen! */
             }
-            let startpos = match.index + match[0].split('\n').length + match[0].split('\r').length + 1;
-            let lineno = document.positionAt(startpos).line;
+            let lineno = document.positionAt(match.index).line;
             let symbolRange = new vscode.Range(lineno, 1, lineno, match[0].length);
             const symbol = new vscode.DocumentSymbol(outlineName, outlineKind, kind, symbolRange, symbolRange);
             if (kind === vscode.SymbolKind.Class) {

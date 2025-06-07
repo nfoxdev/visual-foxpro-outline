@@ -1,7 +1,6 @@
-
 # Visual Foxpro Outline
 
-Outline view extension for Visual Studio Code  
+Outline view extension for Visual Studio Code
 
 *Please make a donation! FoxPro extensions need community support to improve!*
 
@@ -10,7 +9,7 @@ Outline view extension for Visual Studio Code
 ## Features
 
 - Class & Object definitions
-- Properties & variables  
+- Properties & variables
 - Procedure & Function definitions with parameters
 - Return Values
 
@@ -18,14 +17,18 @@ Outline view extension for Visual Studio Code
 
 ## Change Log
 
+1.3.20
+
+- fixed bug: program failed when encountering return statements w/o a return value
+
 1.3.12
 
 - updated readme.md
-  
+
 1.3.11
 
 - updated package.json
-  
+
 1.3.1
 
 - maintenance release
@@ -33,22 +36,22 @@ Outline view extension for Visual Studio Code
 1.3.0
 
 - Support for "add object" & array dimension()
-- minor bug fix  
+- minor bug fix
 
 1.2.2
 
 - fixed bug when code contains variable names starting with "return"
-  
+
 1.2.1
 
 - show Public / Protected / Hidden definitions
-- show class properties  
+- show class properties
 - show variable value assignment in methods
-  
-1.1.1  
+
+1.1.1
 
 - Bug fix: return value, declarations and comment tags  now correctly shown as child nodes of procedures/functions
-  
+
 1.1.0
 
 - local & private declarations
@@ -61,6 +64,6 @@ Outline view extension for Visual Studio Code
 - return statements w/o values shown correctly
 - added detection of abbreviated procedure & function names ( proc , func )
 - source code available on github
-  
-2025, Marco Plaza  
-[GitHub/nfoxdev](https://github.com/nfoxdev)  
+
+2025, Marco Plaza
+[GitHub/nfoxdev](https://github.com/nfoxdev)
